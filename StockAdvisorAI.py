@@ -87,7 +87,7 @@ def main(stock_name):
 
     last_sequence = scaler.transform(data[-LOOKBACK:].dropna()).reshape(1, LOOKBACK, -1)
     advice = get_advice(model, last_sequence, close_scaler)
-    print(f"Advice for {stock_name}: {advice}")
+    print(f"StockAdvisorAI recommends the following after analyzing {stock_name}: {advice}")
 
 stock_name = input("Enter the stock ticker symbol of the company you wish to analyze: ")
 main(stock_name)

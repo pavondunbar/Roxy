@@ -69,11 +69,7 @@ Once StockAdvisorAI finishes training, it will output a decision for you to eith
 # Closing Notes
 
 1. This AI model uses the Yahoo Finance (yfinance) dataset to train itself
-2. This AI model trains itself based on these 4 things:
-          a. Historical Price Data
-          b. Volume
-          c. The RSI (Relative Strength Index) technical indicator
-          d. The MACD (Moving Average Convergence Divergence) technical indicator
+2. This AI model trains itself based on the stock's Historical Price Data, Volume, the stock's RSI (Relative Strength Index), and the stock's MACD (Moving Average Convergence Divergence) technical indicators.
 3. StockAdvisorAI does not use Sentiment Score when analyzing stock data
 4. StockAdvisorAI analyzes data from 01/10/2010 to the current day; however, only 3 months of past data is used to make a recommendation.
 

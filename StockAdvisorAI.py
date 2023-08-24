@@ -89,6 +89,6 @@ def main(stock_name):
     advice = get_advice(model, last_sequence, close_scaler)
     print(f"StockAdvisorAI recommends the following after analyzing {stock_name}: {advice}")
 
-stock_name = input("Enter the stock ticker symbol of the company you wish to analyze: ")
+stock_name = input("Enter the stock ticker symbol of the company you want StockAdvisorAI to analyze: ")
 main(stock_name)
 

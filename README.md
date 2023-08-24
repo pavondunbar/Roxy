@@ -44,7 +44,7 @@ After you've created your Python virtual environment, activate it by running the
 source StockAdvisor/bin/activate
 ```
 
-# Install Required libraries
+# Install Required Libraries Using PIP
 
 Run the following command to install the libraries you need to run the AI model as well as train it:
 
@@ -81,7 +81,7 @@ Once StockAdvisorAI finishes training, it will output a decision for you to eith
 
 If you are enjoying StockAdvisorAI, that is awesome and I appreciate it.  But please...**do not use StockAdvisorAI as a "final decision maker" when analyzing a certain stock.** 
 
-As a human, you should still do your research and due diligence before you amake any investment decisions to buy, sell, or hold certain stocks.
+As a human, you should still do your research and due diligence before you make any investment decisions to buy, sell, or hold certain stocks.
 
 By using StockAdvisorAI, you agree to hold the AI, its creator Pavon Dunbar, or any affiliates or representatives of StockAdvisorAI harmless from any financial damages, errors, etc that may result from using StockAdvisorAI.
 

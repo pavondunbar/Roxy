@@ -2,6 +2,28 @@
 
 An AI model written in Python that advises investors to BUY, SELL, or HOLD a stock that is submitted to the AI model for analysis.
 
+# Synopsis and Summary
+
+The AI model is using a type of Artificial Neural Network (ANN) known as a Long Short-Term Memory (LSTM) network. LSTM networks are a type of recurrent neural network (RNN) architecture designed for sequence prediction and time-series analysis. They are well-suited for tasks like stock price prediction, where past data points in a time series are used to predict future values.
+
+In this model, the LSTM network is being used to analyze historical stock price data and provide trading recommendations (Buy, Sell, or Hold) based on various technical indicators and patterns derived from the data. The LSTM network is trained to learn patterns and relationships in the historical stock price data, and it generates predictions for future stock prices based on these patterns.
+
+Here's a brief overview of the major components of the code:
+
+**Data Collection:** Historical stock price data is collected using the Yahoo Finance API (yfinance library) for a specified stock ticker symbol.
+
+**Feature Engineering:** Technical indicators such as Moving Averages (SMA_50 and SMA_200), Relative Strength Index (RSI), Stochastic Oscillator (%K and %D), Moving Average Convergence Divergence (MACD), Bollinger Bands, Average True Range (ATR), Commodity Channel Index (CCI), and On-Balance Volume (OBV) are computed from the raw stock price data. These indicators are used as features for the machine learning model.
+
+**Data Preprocessing:** The data is preprocessed, including feature scaling using Min-Max scaling to ensure that all features have the same scale. The data is organized into input sequences and corresponding target values for training the LSTM model.
+
+**LSTM Model:** An LSTM neural network model is constructed using TensorFlow's Keras API. The model architecture includes LSTM layers with dropout for regularization and a final dense layer for regression (predicting stock prices).
+
+**Training the Model:** The LSTM model is trained on the preprocessed data for a specified number of epochs (iterations).  At this time, the model iterates over the dataset 25 times to detect patterns and anomalies that aid in its analysis, decision, recommendations, and reasons.
+
+**Generating Recommendations:** After training, the model is used to generate trading recommendations (Buy, Sell, or Hold) based on the last available data point and the reasoning provided by various technical indicators.
+
+Overall, this model is using machine learning, specifically LSTM networks, for stock price prediction and trading recommendations. It combines time-series data analysis with neural network techniques to make predictions and provide insights for trading decisions.
+
 # Clone This Repository
 
 Run this command below to clone this repo and begin using it.

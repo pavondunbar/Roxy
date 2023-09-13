@@ -71,7 +71,7 @@ source StockAdvisor/bin/activate
 Run the following command to install the libraries you need to run the AI model as well as train it:
 
 ```
-pip install yfinance numpy scikit-learn tensorflow ta
+pip install yfinance numpy scikit-learn tensorflow ta datetime
 ```
 
 # Start the AI Model

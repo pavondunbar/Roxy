@@ -26,6 +26,8 @@ Overall, Roxy is using machine learning, specifically LSTM networks, for stock p
 
 # Requirements
 
+A terminal window (for now until I get a frontend developed).
+
 Python3.  You can check to see if Python3 is on your system by running the command below:
 
 ```

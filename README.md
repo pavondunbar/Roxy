@@ -61,12 +61,28 @@ If your virtual environment isn't created, you can use this command to create it
 virtualenv RoxyEnv
 ```
 
+Next, type this into the terminal
+
+```
+ls
+```
+
+You should see RoxyEnv (or whatever name you gave your virtual environment) and Roxy.py
+
+If you see both of those items, your virtual environment has been set up.
+
 # Activate the Virtual Environment
 
 After you've created your Python virtual environment, activate it by running the command below:
 
 ```
 source RoxyEnv/bin/activate
+```
+
+**NOTE:** You can turn off your virtual environment by typing this in the terminal
+
+```
+deactivate
 ```
 
 # Install Required Libraries Using PIP

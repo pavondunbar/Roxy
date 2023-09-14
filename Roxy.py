@@ -1,5 +1,8 @@
-# Stock Advisor AI
+# Introducing...Roxy.
 # An AI Model developed by Pavon Dunbar
+
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 import yfinance as yf
 import numpy as np
@@ -10,6 +13,7 @@ from tensorflow.keras.layers import LSTM, Dense, Dropout
 import ta
 import warnings
 from datetime import datetime
+import matplotlib.pyplot as plt
 
 # Suppress the warning
 warnings.filterwarnings(action='ignore', category=UserWarning)
@@ -119,52 +123,86 @@ def get_advice(model, last_sequence, close_scaler, data):
     volume = last_day['Volume']
     average_volume = data['Volume'].rolling(window=5).mean().iloc[-1] # 5-day average volume
 
-    advice_reason = ""
+    advice_reasons = []
 
     # RSI reasoning
     if rsi < 30:
-        advice_reason += "RSI indicates the stock might be oversold. "
+        advice_reasons.append("RSI indicates the stock might be oversold.")
     elif rsi > 70:
-        advice_reason += "RSI indicates the stock might be overbought. "
+        advice_reasons.append("RSI indicates the stock might be overbought.")
     else:
-        advice_reason += "RSI is neutral. "
-
+        advice_reasons.append("RSI is neutral.")
+    
+    # Additional RSI reasoning
+    # RSI divergence
+    if rsi < 70 and data['Close'].iloc[-5:].pct_change().mean() < 0:
+        advice_reasons.append("RSI divergence suggests potential reversal.")
+    
     # MACD reasoning
     if macd > signal:
-        advice_reason += "MACD is above the signal line, indicating a bullish crossover. "
+        advice_reasons.append("MACD is above the signal line, indicating a bullish crossover.")
     elif macd < signal:
-        advice_reason += "MACD is below the signal line, indicating a bearish crossover. "
-
+        advice_reasons.append("MACD is below the signal line, indicating a bearish crossover.")
+    
+    # Additional MACD reasoning
+    # MACD histogram analysis
+    if macd > 0 and data['Close'].iloc[-5:].pct_change().mean() > 0:
+        advice_reasons.append("MACD histogram and price trend support bullish momentum.")
+    
     # Moving Averages reasoning
     if sma_50 > sma_200:
-        advice_reason += "The 50-day Simple Moving Average is above the 200-day Simple Moving Average, indicating a bullish trend. "
+        advice_reasons.append("The 50-day Simple Moving Average is above the 200-day Simple Moving Average, indicating a bullish trend.")
     else:
-        advice_reason += "The 50-day Simple Moving Average is below the 200-day Simple Moving Average, indicating a bearish trend. "
-
+        advice_reasons.append("The 50-day Simple Moving Average is below the 200-day Simple Moving Average, indicating a bearish trend.")
+    
+    # Additional Moving Averages reasoning
+    # Golden cross and death cross
+    if sma_50 > sma_200 and data['Close'].iloc[-5:].pct_change().mean() > 0:
+        advice_reasons.append("Golden cross and recent positive price trend suggest a strong bullish signal.")
+    elif sma_50 < sma_200 and data['Close'].iloc[-5:].pct_change().mean() < 0:
+        advice_reasons.append("Death cross and recent negative price trend suggest a strong bearish signal.")
+    
     # Stochastic Oscillator reasoning
     if stk > stoch_d:
-        advice_reason += "Stochastic Oscillator shows a bullish momentum. "
+        advice_reasons.append("Stochastic Oscillator shows a bullish momentum.")
     elif stk < stoch_d:
-        advice_reason += "Stochastic Oscillator shows a bearish momentum. "
-
+        advice_reasons.append("Stochastic Oscillator shows a bearish momentum.")
+    
+    # Additional Stochastic Oscillator reasoning
+    # Custom overbought/oversold levels
+    if stk > 80:
+        advice_reasons.append("Stochastic Oscillator indicates overbought conditions.")
+    elif stk < 20:
+        advice_reasons.append("Stochastic Oscillator indicates oversold conditions.")
+    
     # Historical prices reasoning
     if data['Close'].iloc[-5:].pct_change().mean() > 0:
-        advice_reason += "The stock has been on an upward trend over the last 5 days. "
+        advice_reasons.append("The stock has been on an upward trend over the last 5 days.")
     else:
-        advice_reason += "The stock has been on a downward trend over the last 5 days. "
-
+        advice_reasons.append("The stock has been on a downward trend over the last 5 days.")
+    
     # Volume reasoning
     if volume > 1.5 * average_volume:
-        advice_reason += "The trading volume is significantly higher than the 5-day average, indicating strong interest in the stock. "
-
+        advice_reasons.append("The trading volume is significantly higher than the 5-day average, indicating strong interest in the stock.")
+    
     if predicted_value > last_real_value:
-        advice = "Buy"
+        advice = "BUY"
     elif predicted_value < last_real_value:
-        advice = "Sell"
+        advice = "SELL"
     else:
-        advice = "Hold"
+        advice = "HOLD"
 
-    return advice, advice_reason
+    return advice, advice_reasons
+
+def plot_stock_chart(data):
+    plt.figure(figsize=(12, 6))
+    plt.plot(data.index, data['Close'], label='Close Price', color='blue')
+    plt.title('Historical Stock Price Chart')
+    plt.xlabel('Date')
+    plt.ylabel('Price')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
 
 def main(stock_name):
     data = get_data(stock_name)
@@ -177,9 +215,28 @@ def main(stock_name):
     numeric_data = data.select_dtypes(include=[np.number])
 
     last_sequence = scaler.transform(numeric_data[-LOOKBACK:].dropna()).reshape(1, LOOKBACK, -1)
-    advice, reason = get_advice(model, last_sequence, close_scaler, data)
-    print(f"StockAdvisorAI recommends the following after analyzing {stock_name}: {advice}")
-    print(f"Reasoning: {reason}")
+    advice, reasons = get_advice(model, last_sequence, close_scaler, data)
+    
+    # Get the current stock price
+    current_price = data['Close'].iloc[-1]
+    
+    # Output the chart
+    plt.figure(figsize=(10, 6))
+    plt.plot(data.index, data['Close'], label='Close Price', color='blue')
+    plt.scatter(data.index[-1], current_price, label=f'Current Price: ${current_price:.2f}', color='red', marker='o', s=100)
+    plt.xlabel('Date')
+    plt.ylabel('Price')
+    plt.title(f'Stock Price Chart for {stock_name}')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
 
-stock_name = input("Enter the stock ticker symbol of the company you want StockAdvisorAI to analyze: ")
+    # Output the recommendations and reasons in numbered bulleted format
+    print("My Post-Analysis Results:")
+    for i, reason in enumerate(reasons, start=1):
+        print(f"{i}. {reason}")
+
+    print(f"After analyzing {stock_name} as you requested, I recommend the following: {advice}")
+
+stock_name = input("Hello, I'm Roxy. Enter the stock ticker symbol (in all caps, ex: AAPL, TSLA) you want me to analyze: ")
 main(stock_name)

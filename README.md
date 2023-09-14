@@ -1,36 +1,28 @@
-# StockAdvisorAI
+# Roxy
 
-An AI model written in Python that advises investors to BUY, SELL, or HOLD a stock that is submitted to the AI model for analysis.
+Roxy is an AI model written in Python that advises investors to BUY, SELL, or HOLD a stock that is submitted to her for analysis.
 
 # Synopsis and Summary
 
-The AI model is using a type of Artificial Neural Network (ANN) known as a Long Short-Term Memory (LSTM) network. LSTM networks are a type of recurrent neural network (RNN) architecture designed for sequence prediction and time-series analysis. They are well-suited for tasks like stock price prediction, where past data points in a time series are used to predict future values.
+Roxy is using a type of Artificial Neural Network (ANN) known as a Long Short-Term Memory (LSTM) network. LSTM networks are a type of recurrent neural network (RNN) architecture designed for sequence prediction and time-series analysis. They are well-suited for tasks like stock price prediction, where past data points in a time series are used to predict future values.
 
-In this model, the LSTM network is being used to analyze historical stock price data and provide trading recommendations (Buy, Sell, or Hold) based on various technical indicators and patterns derived from the data. The LSTM network is trained to learn patterns and relationships in the historical stock price data, and it generates predictions for future stock prices based on these patterns.
+For Roxy, the LSTM network is being used to analyze historical stock price data and provide trading recommendations (Buy, Sell, or Hold) based on various technical indicators and patterns derived from the data. The LSTM network is trained to learn patterns and relationships in the historical stock price data, and it generates predictions for future stock prices based on these patterns.
 
-Here's a brief overview of the major components of the code:
+Here's a brief overview of the major components of Roxy:
 
 **Data Collection:** Historical stock price data is collected using the Yahoo Finance API (yfinance library) for a specified stock ticker symbol.
 
-**Feature Engineering:** Technical indicators such as Moving Averages (SMA_50 and SMA_200), Relative Strength Index (RSI), Stochastic Oscillator (%K and %D), Moving Average Convergence Divergence (MACD), Bollinger Bands, Average True Range (ATR), Commodity Channel Index (CCI), and On-Balance Volume (OBV) are computed from the raw stock price data. These indicators are used as features for the machine learning model.
+**Feature Engineering:** Technical indicators such as Moving Averages (SMA_50 and SMA_200), Relative Strength Index (RSI), Stochastic Oscillator (%K and %D), Moving Average Convergence Divergence (MACD), Bollinger Bands, Average True Range (ATR), Commodity Channel Index (CCI), and On-Balance Volume (OBV) are computed from the raw stock price data. These indicators are used as features for Roxy.
 
-**Data Preprocessing:** The data is preprocessed, including feature scaling using Min-Max scaling to ensure that all features have the same scale. The data is organized into input sequences and corresponding target values for training the LSTM model.
+**Data Preprocessing:** The data is preprocessed, including feature scaling using Min-Max scaling to ensure that all features have the same scale. The data is organized into input sequences and corresponding target values for training Roxy.
 
 **LSTM Model:** An LSTM neural network model is constructed using TensorFlow's Keras API. The model architecture includes LSTM layers with dropout for regularization and a final dense layer for regression (predicting stock prices).
 
-**Training the Model:** The LSTM model is trained on the preprocessed data for a specified number of epochs (iterations).  At this time, the model iterates over the dataset 25 times to detect patterns and anomalies that aid in its analysis, decision, recommendations, and reasons.
+**Training the Model:** Roxy is trained on the preprocessed data for a specified number of epochs (iterations).  At this time, Roxy iterates over the dataset 25 times to detect patterns and anomalies that aid in her analysis, decision, recommendations, and reasons.
 
-**Generating Recommendations:** After training, the model is used to generate trading recommendations (Buy, Sell, or Hold) based on the last available data point and the reasoning provided by various technical indicators.
+**Generating Recommendations:** After training, Roxy is used to generate trading recommendations (Buy, Sell, or Hold) based on the last available data point and the reasoning provided by various technical indicators.
 
-Overall, this model is using machine learning, specifically LSTM networks, for stock price prediction and trading recommendations. It combines time-series data analysis with neural network techniques to make predictions and provide insights for trading decisions.
-
-# Clone This Repository
-
-Run this command below to clone this repo and begin using it.
-
-```
-git clone https://github.com/pavondunbar/StockAdvisorAI && cd StockAdvisorAI
-```
+Overall, Roxy is using machine learning, specifically LSTM networks, for stock price prediction and trading recommendations. She combines time-series data analysis with neural network techniques to make predictions and provide insights for trading decisions.
 
 # Requirements
 
@@ -42,20 +34,29 @@ python3 --version
 
 If a version number prints out, you are good to go.
 
-# Create a Python Virtual Environment
+# Clone This Repository
 
-It is recommended to create a Python virtual environment to run this AI model.  Running a virtual environment will prevent library conflicts with other Python projects or applications you may have on your system.
-
-Create a virtual environment named StockAdvisor (or whatever you want to call it) by running the following command:
+Run this command below to clone this repo and begin using it.
 
 ```
-python3 -m venv StockAdvisor
+git clone https://github.com/pavondunbar/Roxy && cd Roxy
+```
+
+
+# Create a Python Virtual Environment
+
+It is recommended to create a Python virtual environment to run Roxy.  Running a virtual environment will prevent library conflicts with other Python projects or applications you may have on your system.
+
+Create a virtual environment named RoxyEnv (or whatever you want to call it) by running the following command:
+
+```
+python3 -m venv RoxyEnv
 ```
 
 If your virtual environment isn't created, you can use this command to create it:
 
 ```
-virtualenv StockAdvisor
+virtualenv RoxyEnv
 ```
 
 # Activate the Virtual Environment
@@ -63,46 +64,49 @@ virtualenv StockAdvisor
 After you've created your Python virtual environment, activate it by running the command below:
 
 ```
-source StockAdvisor/bin/activate
+source RoxyEnv/bin/activate
 ```
 
 # Install Required Libraries Using PIP
 
-Run the following command to install the libraries you need to run the AI model as well as train it:
+Run the following command to install the libraries you need to run and train Roxy:
 
 ```
-pip install yfinance numpy scikit-learn tensorflow ta datetime
+pip install yfinance numpy scikit-learn tensorflow ta datetime matplotlib
 ```
 
-# Start the AI Model
+# Initialize Roxy
 
-Now the fun begins!  Run the following command to boot up the StockAdvisor AI model:
+Now the fun begins!  Run the following command to Initialize Roxy:
 
 ```
-python3 StockAdvisorAI.py
+python3 Roxy.py
 ```
 
-The AI model will initialize and ask you to submit a stock ticker symbol for a company
+Roxy will initialize and ask you to submit a stock ticker symbol for a company. **Please submit a ticker in ALL CAPS (ex: AAPL, TSLA).**
 
-After you submit the stock ticker symbol, the AI will do 25 iterations over the dataset.  StockAdvisorAI is effectively "training itself" to find patterns in the datasets so it can make a determination.
+After you submit the stock ticker symbol, Roxy will do 25 iterations over the dataset.  Roxy is effectively "training herself" to find patterns and anomalies in the dataset so she can make a determination.
 
-Once StockAdvisorAI finishes training, it will output a decision for you to either BUY, SELL, or HOLD the stock.
+Once Roxy finishes training, she will output a decision for you to either BUY, SELL, or HOLD the stock, reasons for her decision, and a visual chart that you can save on your computer.
 
 # Closing Notes
 
-1. This AI model uses the Yahoo Finance (yfinance) dataset to train itself
-2. This AI model trains itself based on the stock's Historical Price Data, Volume, the stock's RSI (Relative Strength Index), and the stock's MACD (Moving Average Convergence Divergence) technical indicators.
-3. StockAdvisorAI does not use Sentiment Score when analyzing stock data
-4. StockAdvisorAI analyzes data from 01/10/2010 to the current day; however, only 3 months of past data is used to make a recommendation.
+1. Roxy uses the Yahoo Finance (yfinance) dataset to train herself.
+2. Roxy trains herself based on the stock's Historical Price Data, Volume, the stock's RSI (Relative Strength Index), and the stock's MACD (Moving Average Convergence Divergence) among other technical indicators.
+3. At this time, **Roxy does not use Sentiment Score when analyzing stock data.**
+4. Roxy analyzes data from 01/10/2010 to the current day; however, only 3 months of past data is used to make a recommendation.
 
 # Disclaimer
 
-If you are enjoying StockAdvisorAI, that is awesome and I appreciate it.  But please...**do not use StockAdvisorAI as a "final decision maker" when analyzing a certain stock.** 
+If you enjoy using Roxy to hopefully make you more money and be better informed to make an investment decision, that is awesome and I appreciate it.  But please...**do not use Roxy as a "final decision maker" when analyzing a certain stock.** 
 
 As a human, you should still do your research and due diligence before you make any investment decisions to buy, sell, or hold certain stocks.
 
-By using StockAdvisorAI, you agree to hold the AI, its creator Pavon Dunbar, or any affiliates or representatives of StockAdvisorAI harmless from any financial damages, errors, etc that may result from using StockAdvisorAI.
+By using Roxy, you agree to hold Roxy, its creator Pavon Dunbar, or any affiliates or representatives of Roxy harmless from any financial damages, errors, etc that may result from use or misuse of Roxy.
 
-StockAdvisorAI is a **work in progress** and will be consistently updated.
+Roxy is a **work in progress** and will be consistently updated.
 
+# Let's Get Social!
+
+Feel free to connect with me.  My Linktree is https://linktr.ee/pavondunbar
 
